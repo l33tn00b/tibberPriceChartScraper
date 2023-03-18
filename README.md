@@ -29,29 +29,41 @@ You might want an ePaper display for dynamic electricity pricing in your kitchen
 To sum up, having a display for dynamic electricity pricing in your kitchen can help you make more informed decisions about your energy usage and promote energy conservation, cost savings, and environmental sustainability.
 
 # Which provider?
-There's a limited number of providers offering dynamic electricity pricing in Germany. One of them is Tibber. They offer pricing data via API for customers only. And I'm not a customer (yet). So we need to scrape the chart off their website and render it for the ePaper display. 
+There's a limited number of providers offering dynamic electricity pricing in Germany. One of them is [_Tibber_](www.tibber.com). They offer pricing data via API for customers only. And I'm not a customer (yet). So we need to scrape the chart off their website and render it for the ePaper display. 
 
 # How?
 This will be based on https://www.stavros.io/posts/making-the-timeframe/.
 The resulting picture for display (having completed steps given below):
 ![Image for ePaper Display](tibber_chart_inverted.png "Tibber Price Chart prepared for ePaper Display, Firefox Capture")
 
-Result: 
 I've created a container automating the scraping and serving the image of the Tibber price chart for the Timeframe to fetch.
-The container is based on Selenium-Firefox and has additional modifications to automate scraping and serving the result. The web server runs on port 8999 (https) using on-the-fly generated keys. Just why? Because if your tool is a hammer, every problem looks like a nail. Tool = Selenium. 
+The container is based on [Selenium-Firefox](https://github.com/SeleniumHQ/docker-selenium) and has additional modifications to automate scraping and serving the result. The web server runs on port 8999 (https) using on-the-fly generated keys. 
 
-Customization: 
+Why that way? Because if your tool is a hammer, every problem looks like a nail. Tool = Selenium. 
+
+# Alternatives 
+Get raw pricing data from the European Transparency Platform, calculate pricing according to a particular provider. Render a nice chart ourselves. 
+
+Benefits:
+- Lightweight solution (smaller container). 
+- Customizable chart. 
+
+Drawbacks: 
+- Requires detailed data on pricing components for each municipality. 
+- Requires in-depth data on pricing calculation for each provider. 
+
+# Customization 
 The container is customized for my location. You will have / might want to change: 
 - Zip code via ```ENV``` parameter in Dockerfile or at runtime (```-e "PLZ=<your zip code>"```). This will affect price calculation. Each municipality has different pricing.
 - Zip Code check inside ```scripts/scrape_firefox.py```. Currently, only numbers are acceptable input.
-- Timezone via env parameter at container startup.
+- Timezone via ```ENV``` parameter (```-e "TZ=Europe/Berlin"```) at container startup.
 
-
-Issues:
+# Issues
 - Web Scraping the Chart needs a Browser (Selenium). So the server side component has to be run on a (relatively) beefy machine (so many dependencies). Can't additionally load my little Rapberry with this.
 - (no:) Maybe using BeautifulSoup to extract the Tibber SVG chart and render it with something like Imagemagick? But there's the issue of having an interactive website (Zip Code...). So: no...
 
-Steps to scrape the chart using Selenium:
+# Technical Deep-Dive
+## Steps to scrape the chart using Selenium:
 - Load cookies (cookie banner be gone) or run browser with appropriate extension (need to install it in Selenium container).
 - Add Zip Code to input field: ```driver.find_element(By.XPATH, "/html/body/div[1]/main/div[4]/div/section/div/div[1]/div/div/div[1]/div/div/section/div[2]/div/div/div[1]/div/div/span/input")```
 - Click Button: ```input_button = driver.find_element(By.XPATH,"/html/body/div[1]/main/div[4]/div/section/div/div[1]/div/div/div[1]/div/div/section/div[2]/div/div/div[1]/div/div/button")```
@@ -59,7 +71,7 @@ Steps to scrape the chart using Selenium:
 - Save Screenshot: ```price_chart.screenshot("<location>")```
 This will -of course- be badly broken if Tibber decide to change their website (absolute XPATHs for identification of objects).
 
-Building a Container doing the scraping and conversion:
+## Building a Container doing the scraping and conversion:
 - Start by using the official Selenium Chrome Container (https://github.com/SeleniumHQ/docker-selenium): ```docker run selenium/standalone-chrome python3 --version``` Does it run? Good.
 - Thank you, StackOverflow (https://stackoverflow.com/questions/47955548/docker-image-with-python3-chromedriver-chrome-selenium): Create a ```Dockerfile``` adding Selenium Python Modules to the already installed Selenium:
   ```
@@ -115,7 +127,7 @@ Building a Container doing the scraping and conversion:
   Need to download files? 
   Mount a host directory into the container. Need to fix permissions first (see https://github.com/SeleniumHQ/docker-selenium last section)
   ```
-  cd /home/<username>/dockerSeleniumPython
+  cd /home/<username>/tibberPriceChartScraper
   mkdir download
   chown 1200:1201 download
   ```
@@ -123,13 +135,15 @@ Building a Container doing the scraping and conversion:
   ```
   docker run -d -e "TZ=Europe/Berlin" -p 7900:7900 -p 8999:8999 --shm-size="2g" --name busy_shockley -v /home/<username>/dockerSeleniumPython/download:/home/seluser/files selenium-firefox-test
   ```
+ 
+## Scraping: 
+Selenium's containers run Openshift. So there is a supervisord coordinating programs/services inside the container.
+Selenium's supervisor configuration is given in ```/etc/supervisor/conf.d/selenium.conf```. We'll just add another ```.conf```file handling 
+- Web Server Startup (nginx),
+- Cron Startup,
+- Initial scrape after container startup (further scrapes will be initiated by a cronjob starting the scrape script).
   
-  Selenium's containers run Openshift. So there is a supervisord coordinating programs/services inside the container.
-  Senenium's supervisor configuration is given in ```/etc/supervisor/conf.d/selenium.conf```. We'll just add another ```.conf```file handling
-  - Initial scrape after container startup (further scrapes will be initiated by a cronjob starting the scrape script),
-  - Flask HTTP server startup.
-  
-Caveat:
+## Caveats
 - Container Differences
   - Using Selenium-Chrome will drop you into a root shell in the container
   - Using Selenium-Firefox will drop you into a user shell in the container... 
@@ -148,23 +162,25 @@ Do also make sure, you're running the scraping script from the user home directo
   - cron needs to be (re-)started at container init (because there is no init system)
   - per-user crontabs are dicey. Use system-wide /etc/crontab instead.
   - Supervisor (I think) runs as non-root user in the Firefox container. So we cannot run conf-scripts demanding switching to user=root. Working around that by using sudo in the shell script.
+  
 - Encryption:
-  - https keys generation: I'd have loved to properly do this on the fly at container startup. But generating keys takes quite a long time. So we either use shorter keys (or copy pre-made ones into the container).
+ Https keys generation: I'd have loved to properly do this on the fly at container startup. But generating keys takes quite a long time. So we either use shorter keys (or copy pre-made ones into the container).
 
-Time zone issues:
-- Getting the correct local time inside the Selenium container is quite a feat. Time zone is set via an env parameter. This will only be honored when in a normal shell (because the system in the cotainer still runs on UTC as set in /etc/timezone). When running our cronjob to do once-a-day scraping we'd like to add a timestamp to the image. But this is not a normal shell, it's a cronjob. So any time queries will fall back to responding in UTC. Resorted to exporting TZ Env Parameter before execution of the command. It works. Doesn't have to be beautiful.
+- Time zone issues:
+Getting the correct local time inside the Selenium container is quite a feat. Time zone is set via an env parameter. This will only be honored when in a normal shell (because the system in the cotainer still runs on UTC as set in /etc/timezone). When running our cronjob to do once-a-day scraping we'd like to add a timestamp to the image. But this is not a normal shell, it's a cronjob. So any time queries will fall back to responding in UTC. Resorted to exporting TZ Env Parameter before execution of the command. It works. Doesn't have to be beautiful.
 
-ToDo:
-- Add conversion scripts from "The Timeframe"
+# ToDo:
+- Add conversion scripts from "The Timeframe" (rendering b/w image, still needs to be converted to binary)
 - Modify Conversion Scripts to crop screenshot (done)
 - Change background in selenium to white (for screenshot) (done, doesn't work, so we invert the colors using Python Imaging Library (Pillow))
 - Change container time to local timezone (done, see https://github.com/SeleniumHQ/docker-selenium/wiki/Setting-a-Timezone)
 - Add flask so we may serve the result directly from our container using Python (not, instead use proper server for https, nginx, done)
-- Set Zip Code via env parameter at container startup.
+- Set Zip Code via env parameter at container startup (done)
 - Add timestamp to screencapture to show latest update (done)
 - Use generated/provided DH parameters (https://github.com/MarvAmBass/docker-nginx-ssl-secure/blob/master/ssl.conf)
 
-Things that probably never will come to pass:
+# Things that probably never will come to pass:
 - Proper certificates for https (maybe https://anuragbhatia.com/2020/05/sys-admin/automated-ssl-certificate-management-for-private-containers/)
 - Give users a choice of length for DH group via env parameters (https://github.com/MarvAmBass/docker-nginx-ssl-secure).
 - Proper handling of security updates (crude cron-based solution running unattended-upgrades once a day. Risk of breaking things.).
+- Proper localization.
