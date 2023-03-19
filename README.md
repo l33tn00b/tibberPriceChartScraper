@@ -186,7 +186,14 @@ Getting the correct local time inside the Selenium container is quite a feat. Ti
 - Proper localization.
 
 
-# Script Documentation
+# Scrape-Script Documentation
+The script for scraping contains quite some examples of bad coding practice. You have been warned. Some examples include:
+- Using global variables 
+- Overwriting files without asking
+- Using sudo to write to directories
+- Inconsistency wrt whether hashes are calculated inside a function or separately
+- ...
+
 ## calc_bin_image_hash
 The function takes a single argument ```bin_filename``` of type ```string```. The purpose of this function is to calculate the SHA-256 hash of a binary file and save it to a separate file with the extension .sha.
 
