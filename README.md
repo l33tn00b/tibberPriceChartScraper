@@ -198,3 +198,12 @@ The function then opens a file with the name ```bin_filename``` + ".sha" in bina
 
 Finally, the function returns the content hash as a string.
 
+## bincode_image
+his is a Python function that encodes a PIL Image into a binary format suitable for display on an ePaper device. The encoded image is also written to a file specified by the outfile argument.
+
+The function takes two arguments: im, which is a PIL Image object representing the image to be encoded, and outfile, which is a string specifying the file name for the encoded image.
+
+The encoding process works by iterating through each pixel in the image row by row. For each pixel, the function extracts the RGB color values and uses bitwise operations to combine them into a single byte value. This byte is added to a list called contents. Once the function has processed all the pixels in a row, it writes the contents list to the output file in binary format.
+
+After the encoding process is complete, the function calls ```calc_bin_image_hash``` to calculate a hash of the encoded image file. This hash is not used in the encoding process, but will be used for update checking purposes (i.e. is there a new image to be displayed?) later.
+
