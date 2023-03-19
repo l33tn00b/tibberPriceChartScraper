@@ -170,7 +170,9 @@ Do also make sure, you're running the scraping script from the user home directo
 Getting the correct local time inside the Selenium container is quite a feat. Time zone is set via an env parameter. This will only be honored when in a normal shell (because the system in the cotainer still runs on UTC as set in /etc/timezone). When running our cronjob to do once-a-day scraping we'd like to add a timestamp to the image. But this is not a normal shell, it's a cronjob. So any time queries will fall back to responding in UTC. Resorted to exporting TZ Env Parameter before execution of the command. It works. Doesn't have to be beautiful.
 
 # ToDo:
-- Add conversion scripts from "The Timeframe" (rendering b/w image, still needs to be converted to binary)
+- Create crontab at startup (we need to export our env variables into the cron environment)
+- Alternative: Source complete env before starting jobs in crontab
+- Add conversion scripts from "The Timeframe" (done)
 - Modify Conversion Scripts to crop screenshot (done)
 - Change background in selenium to white (for screenshot) (done, doesn't work, so we invert the colors using Python Imaging Library (Pillow))
 - Change container time to local timezone (done, see https://github.com/SeleniumHQ/docker-selenium/wiki/Setting-a-Timezone)
