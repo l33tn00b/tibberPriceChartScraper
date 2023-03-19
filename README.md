@@ -184,3 +184,17 @@ Getting the correct local time inside the Selenium container is quite a feat. Ti
 - Give users a choice of length for DH group via env parameters (https://github.com/MarvAmBass/docker-nginx-ssl-secure).
 - Proper handling of security updates (crude cron-based solution running unattended-upgrades once a day. Risk of breaking things.).
 - Proper localization.
+
+
+# Script Documentation
+## calc_bin_image_hash
+The function takes a single argument ```bin_filename``` of type ```string```. The purpose of this function is to calculate the SHA-256 hash of a binary file and save it to a separate file with the extension .sha.
+
+The function first imports the hashlib module, which provides various hash algorithms. Specifically, it uses the SHA-256 algorithm for hashing the file.
+
+Next, it calculates the hash of the file contents using ```hashlib.sha256(data).hexdigest()```. The ```hexdigest()``` method returns the hash as a string of hexadecimal digits.
+
+The function then opens a file with the name ```bin_filename``` + ".sha" in binary write mode ("wb") using a with statement. Inside the with block, it writes the content hash to the file using the write() method, which expects a bytes-like object. The ```encode()``` method is used to convert the hash string to bytes.
+
+Finally, the function returns the content hash as a string.
+
