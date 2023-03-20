@@ -4,18 +4,6 @@ Getting the Tibber Price Chart for Display on an ePaper Display
 This is a breakout from [my efforts to get ready for Smart Grid integration](https://github.com/l33tn00b/GettingReadyForSmartGrid).
 
 # Just why?
-Dynamic pricing is an essential element of a future smart electrical grid because it allows for the efficient allocation of energy resources, encourages conservation during peak periods, and provides economic incentives for consumers to shift their energy usage to off-peak hours.
-
-In a traditional electrical grid, the cost of electricity remains the same throughout the day, regardless of the level of demand. However, in a smart grid, energy prices can be adjusted based on real-time demand, supply, and other factors. This allows for more efficient use of energy resources, as prices can be adjusted to reflect the actual cost of generating and distributing electricity at different times of the day.
-
-For example, during periods of high demand, such as hot summer afternoons when many people are using air conditioning, energy prices can be increased to encourage consumers to reduce their energy usage or shift it to off-peak hours when demand is lower. This reduces the strain on the grid and can help prevent blackouts or brownouts.
-
-Dynamic pricing can also incentivize the use of renewable energy sources, such as solar and wind power. As these sources of energy are intermittent, dynamic pricing can encourage consumers to use energy when it is available and reduce usage when it is not. This can help to balance the grid and reduce the need for traditional fossil fuel power plants.
-
-In addition, dynamic pricing can provide economic benefits for consumers. By offering lower prices during off-peak hours, consumers can save money on their energy bills by shifting their usage to those times. This can also help to reduce overall energy costs and improve energy affordability for consumers.
-
-Overall, dynamic pricing is an essential element of a future smart electrical grid because it can help to improve grid efficiency, reduce the need for new infrastructure, promote renewable energy use, and provide economic benefits for consumers.
-
 You might want an ePaper display for dynamic electricity pricing in your kitchen for several reasons:
 
 1. Real-time information: By having a display for dynamic electricity pricing in their kitchen, you can have access to real-time information about the current cost of electricity. This can help you make informed decisions about when to use energy and when to conserve.
