@@ -175,6 +175,9 @@ Getting the correct local time inside the Selenium container is quite a feat. Ti
 - Proper handling of security updates (crude cron-based solution running unattended-upgrades once a day. Risk of breaking things.).
 - Proper localization.
 
+# Activating syslog
+```sudo apt-get install rsyslog``` 
+Go to config file to activate cron logging to syslog...
 
 # Scrape-Script Documentation
 The script for scraping contains quite some examples of bad coding practice. You have been warned. Some examples include:
