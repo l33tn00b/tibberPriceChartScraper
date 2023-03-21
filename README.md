@@ -22,7 +22,8 @@ There's a limited number of providers offering dynamic electricity pricing in Ge
 # How?
 This will be based on https://www.stavros.io/posts/making-the-timeframe/.
 The resulting picture for display (having completed steps given below):
-![Image for ePaper Display](tibber_chart_inverted.png "Tibber Price Chart prepared for ePaper Display, Firefox Capture")
+![Image for ePaper Display](tibber_chart_inverted.png "Tibber Price Chart prepared for ePaper Display, Firefox Capture").
+For the chart to be properly displayed the picture is in landscape mode. So the original case made by Stavros will not fit. 
 
 I've created a container automating the scraping and serving the image of the Tibber price chart for the Timeframe to fetch.
 The container is based on [Selenium-Firefox](https://github.com/SeleniumHQ/docker-selenium) and has additional modifications to automate scraping and serving the result. The web server runs on port 8999 (https) using on-the-fly generated keys. 
@@ -32,19 +33,19 @@ Why that way? Because if your tool is a hammer, every problem looks like a nail.
 # Alternatives 
 Get raw pricing data from the European Transparency Platform, calculate pricing according to a particular provider. Render a nice chart ourselves. 
 
-Benefits:
+Benefits of alternative solution:
 - Lightweight solution (smaller container). 
 - Customizable chart. 
 
-Drawbacks: 
+Drawbacks of alternative solution: 
 - Requires detailed data on pricing components for each municipality. 
 - Requires in-depth data on pricing calculation for each provider. 
 
 # Customization 
 The container is customized for my location. You will have / might want to change: 
 - Zip code via ```ENV``` parameter in Dockerfile or at runtime (```-e "PLZ=<your zip code>"```). This will affect price calculation. Each municipality has different pricing.
-- Zip Code check inside ```scripts/scrape_firefox.py```. Currently, only numbers are acceptable input.
-- Timezone via ```ENV``` parameter (```-e "TZ=Europe/Berlin"```) at container startup.
+- Zip Code may also be specified in ```config.yml```. Default is via ```env```.
+- Timezone via ```ENV``` parameter (```-e "TZ=Europe/Berlin"```) at container startup. (This is inherited from Selenium's container.)
 
 # Issues
 - Web Scraping the Chart needs a Browser (Selenium). So the server side component has to be run on a (relatively) beefy machine (so many dependencies). Can't additionally load my little Rapberry with this.
