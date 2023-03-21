@@ -46,6 +46,7 @@ Why that way? Because if your tool is a hammer, every problem looks like a nail.
     - you link the pio executables to your path: https://docs.platformio.org/en/latest/core/installation/shell-commands.html
       - and manually create the directory ```~/.local/bin``` on a vanilla Ubuntu installation
     - you set the udev rules: https://docs.platformio.org/en/latest/core/installation/udev-rules.html
+    - you attach both USB devices to the VM (QinHeng Electronics USB Single Serial and Unknown Device 27C6 55A4)
     
 
 # Alternatives 
