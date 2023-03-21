@@ -16,10 +16,10 @@ You might want an ePaper display for dynamic electricity pricing in your kitchen
 
 To sum up, having a display for dynamic electricity pricing in your kitchen can help you make more informed decisions about your energy usage and promote energy conservation, cost savings, and environmental sustainability.
 
-# Which provider?
+# Which provider? Tibber.
 There's a limited number of providers offering dynamic electricity pricing in Germany. One of them is [_Tibber_](www.tibber.com). They offer pricing data via API for customers only. And I'm not a customer (yet). So we need to scrape the chart off their website and render it for the ePaper display. 
 
-# How?
+# How? Using an ePaper display and a container to scrape and serve the price chart.
 This will be based on https://www.stavros.io/posts/making-the-timeframe/.
 The resulting picture for display (having completed steps given below):
 ![Image for ePaper Display](tibber_chart_inverted.png "Tibber Price Chart prepared for ePaper Display, Firefox Capture").
