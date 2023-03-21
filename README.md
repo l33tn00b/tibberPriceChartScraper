@@ -30,6 +30,24 @@ The container is based on [Selenium-Firefox](https://github.com/SeleniumHQ/docke
 
 Why that way? Because if your tool is a hammer, every problem looks like a nail. Tool = Selenium. 
 
+# Run it
+## Set container for scraping and serving result
+
+## Set up ePaper Display a.k.a. The Timeframe
+- Stavros' instructions are based on a Linux system. This will most probably lead to issues when trying to build the firmware on Windows. I ran into a nasty error during compilation:
+  ```
+  .pio/libdeps/t5-4.7/WiFiManager/WiFiManager.h:172:34: fatal error: core_version.h: No such file or directory
+  ```
+  There's no obvious way of fixing this apart from refactoring the code to get the includes right. And I'm too lazy to do that. So:  
+  - Either flash the pre-built image from his Gitlab
+    - which isn't really easy 
+  or
+  - set up a Linux VM for compilation (which works like a charm) if:
+    - you link the pio executables to your path: https://docs.platformio.org/en/latest/core/installation/shell-commands.html
+      - and manually create the directory ```~/.local/bin``` on a vanilla Ubuntu installation
+    - you set the udev rules: https://docs.platformio.org/en/latest/core/installation/udev-rules.html
+    
+
 # Alternatives 
 Get raw pricing data from the European Transparency Platform, calculate pricing according to a particular provider. Render a nice chart ourselves. 
 
