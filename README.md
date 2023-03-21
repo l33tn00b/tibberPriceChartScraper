@@ -159,15 +159,16 @@ Do also make sure, you're running the scraping script from the user home directo
 Getting the correct local time inside the Selenium container is quite a feat. Time zone is set via an env parameter. This will only be honored when in a normal shell (because the system in the cotainer still runs on UTC as set in /etc/timezone). When running our cronjob to do once-a-day scraping we'd like to add a timestamp to the image. But this is not a normal shell, it's a cronjob. So any time queries will fall back to responding in UTC. Resorted to exporting TZ Env Parameter before execution of the command. It works. Doesn't have to be beautiful.
 
 # ToDo:
-- Create crontab at startup (we need to export our env variables into the cron environment)
-- Alternative: Source complete env before starting jobs in crontab
-- Add conversion scripts from "The Timeframe" (done)
-- Modify Conversion Scripts to crop screenshot (done)
-- Change background in selenium to white (for screenshot) (done, doesn't work, so we invert the colors using Python Imaging Library (Pillow))
-- Change container time to local timezone (done, see https://github.com/SeleniumHQ/docker-selenium/wiki/Setting-a-Timezone)
-- Add flask so we may serve the result directly from our container using Python (not, instead use proper server for https, nginx, done)
-- Set Zip Code via env parameter at container startup (done)
-- Add timestamp to screencapture to show latest update (done)
+- Provide bin file for ePaper display when there hasn't been a scrape, yet.
+- Done: Create crontab at startup (we need to export our env variables into the cron environment)
+- No: Alternative: Source complete env before starting jobs in crontab
+- Done: Add conversion scripts from "The Timeframe"
+- Done: Modify Conversion Scripts to crop screenshot
+- Done: Change background in selenium to white (for screenshot) (done, doesn't work, so we invert the colors using Python Imaging Library (Pillow))
+- Done: Change container time to local timezone (done, see https://github.com/SeleniumHQ/docker-selenium/wiki/Setting-a-Timezone)
+- Done: Add flask so we may serve the result directly from our container using Python (not, instead use proper server for https, nginx, done)
+- Done: Set Zip Code via env parameter at container startup
+- Done: Add timestamp to screencapture to show latest update
 - Use generated/provided DH parameters (https://github.com/MarvAmBass/docker-nginx-ssl-secure/blob/master/ssl.conf)
 
 # Things that probably never will come to pass:
