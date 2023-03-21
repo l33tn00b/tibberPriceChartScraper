@@ -43,6 +43,7 @@ Why that way? Because if your tool is a hammer, every problem looks like a nail.
     - which isn't really easy 
   or
   - set up a Linux VM for compilation (which works like a charm) if:
+    - you run the installer script: https://docs.platformio.org/en/latest/core/installation/methods/installer-script.html  
     - you link the pio executables to your path: https://docs.platformio.org/en/latest/core/installation/shell-commands.html
       - and manually create the directory ```~/.local/bin``` on a vanilla Ubuntu installation
     - you set the udev rules: https://docs.platformio.org/en/latest/core/installation/udev-rules.html
