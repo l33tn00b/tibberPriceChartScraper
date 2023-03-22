@@ -3,6 +3,8 @@ Getting the Tibber Price Chart for Display on an ePaper Display
 
 This is a breakout from [my efforts to get ready for Smart Grid integration](https://github.com/l33tn00b/GettingReadyForSmartGrid).
 
+![Tibber Price Chart on ePaper Display](timeframe_tibber_chart.JPG "Tibber Price Chart on ePaper Display").
+
 # Just why?
 You might want an ePaper display for dynamic electricity pricing in your kitchen for several reasons:
 
