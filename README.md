@@ -90,6 +90,7 @@ For more configuration options (e.g. different country), see the config.yaml sec
     
 ## HELP!
 - If you run into issues building the container image: Check your disk space. Is there any left? There's plenty of strange errors when running low.
+- Docker needs privileges. Are you root? Do you at least belong to an appropriate group?
 
 # Alternatives 
 Get raw pricing data from the European Transparency Platform, calculate pricing according to a particular provider. Render a nice chart ourselves. 
