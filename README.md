@@ -152,7 +152,7 @@ This will -of course- be badly broken if Tibber decide to change their website (
   ```
  
 ## Scraping: 
-Selenium's containers run Openshift. So there is a supervisord coordinating programs/services inside the container.
+Selenium's containers run supervisord coordinating programs/services inside the container.
 Selenium's supervisor configuration is given in ```/etc/supervisor/conf.d/selenium.conf```. We'll just add another ```.conf```file handling 
 - Web Server Startup (nginx),
 - Cron Startup,
