@@ -34,10 +34,23 @@ Why that way? Because if your tool is a hammer, every problem looks like a nail.
 
 # Run it
 ## Create Container for Scraping and Serving the Chart
-
+Steps given below are for a standard (i.e. german, serving image on port 8999) config:
+- Build Container image:
+  ```
+  docker build . -t tibber-timeframe 
+  ```
+- Run the image:
+  ```
+  docker run -d -e "PLZ=<YOUR_ZIP_CODE_HERE> -e "TZ=Europe/Berlin" -p 8999:8999 --name ttf_server --shm-size="2g" tibber-timeframe
+  ```
+- Check:
+  Point your browser to the server's IP at port 8999 aksing for ```image.png```:
+  ```
+  https://<SERVER_IP>:8999/image.png
+  ```
 ## Container Customization at Startup
 The container needs to be customized for your location. You will have / might want to change: 
-- Zip code via ```ENV``` parameter in Dockerfile or at runtime (```-e "PLZ=<your zip code>"```). This will affect price calculation. Each municipality has different pricing.
+- Zip code via ```ENV``` parameter in Dockerfile or at runtime (```-e "PLZ=<YOUR_ZIP_CODE_HERE>"```). This will affect price calculation. Each municipality has different pricing.
 - Zip Code may also be specified in ```config.yml```. Default is via ```env```.
 - Timezone via ```ENV``` parameter (```-e "TZ=Europe/Berlin"```) at container startup. (This is inherited from Selenium's container.)
 
