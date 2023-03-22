@@ -194,7 +194,7 @@ def calc_bin_image_hash(data: bytes, bin_filename: str):
     with open(bin_filename + ".sha", "wb") as f:
         f.write(content_hash.encode())
     if config_file.get("copy_to_www_dir") == True:
-        copy_to_www_dir(bin_filename + ".sha")
+        copy_to_wwwdir(bin_filename + ".sha")
     return content_hash
 
 
