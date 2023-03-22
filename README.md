@@ -63,6 +63,8 @@ The container needs to be customized for your location. You will have / might wa
 - Zip Code may also be specified in ```config.yml```. Default is via ```env```.
 - Timezone via ```ENV``` parameter (```-e "TZ=Europe/Berlin"```) at container startup. (This is inherited from Selenium's container.)
 
+For more configuration options (e.g. different country), see the config.yaml section below.
+
 ## Set up ePaper Display a.k.a. The Timeframe
 - Stavros' instructions are based on a Linux system. This will most probably lead to issues when trying to build the firmware on Windows. I ran into a nasty error during compilation:
   ```
