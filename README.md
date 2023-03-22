@@ -1,5 +1,5 @@
 # tibberPriceChartScraper
-Getting the Tibber Price Chart for Display on an ePaper Display
+Getting the Tibber Price Chart for Display on an ePaper.
 
 This is a breakout from [my efforts to get ready for Smart Grid integration](https://github.com/l33tn00b/GettingReadyForSmartGrid).
 
