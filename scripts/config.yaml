@@ -1,0 +1,18 @@
+# general behaviour
+# so we may test outside of container environment
+zip_code_from_env : True        # if false: take below value
+zip_code: "20257"               # if not to be taken from env var
+copy_to_www_dir : True          # copy resulting image to www dir
+
+# output file storage
+www_dir : "/var/www"            # without trailing slash!
+outfile_name : "image"          # omit suffix! will be appended automatically
+
+# tibber web site specifics
+website_URL : "http://www.tibber.com/de/strompreise"
+zip_code_input_xpath : "/html/body/div[1]/main/div[4]/div/section/div/div[1]/div/div/div[1]/div/div/section/div[2]/div/div/div[1]/div/div/span/input"
+input_button_xpath : "/html/body/div[1]/main/div[4]/div/section/div/div[1]/div/div/div[1]/div/div/section/div[2]/div/div/div[1]/div/div/button"
+cookie_accept_button_xpath : "in/html/body/div[1]/main/div[6]/div/aside/div[2]/button[2]"
+price_chart_xpath : "/html/body/div[1]/main/div[4]/div/section/div/div[1]/div/div/div[1]/div/div/section/div[2]/div"
+# name incl. path of file containing cookies (pickle serialized)
+cookie_file : "tibber_cookies.pkl" 
