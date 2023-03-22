@@ -48,6 +48,15 @@ Steps given below are for a standard (i.e. german, serving image on port 8999) c
   ```
   https://<SERVER_IP>:8999/image.png
   ```
+  You'll be greeted with a warning. This is perfectly normal because we're using self-signed certificates in the container:
+  
+  ![Connection not secure warning](screenshot_not_secure.png "Connection warning screen.")
+  
+  After clicking "Extended" -> "Continue to..." you'll see the chart:
+  ![Price Chart served in Edge](screenshot_chart_served.png "Screenshot Edge Price Chart served.")
+  
+  You're good to go (from the server side...).
+  
 ## Container Customization at Startup
 The container needs to be customized for your location. You will have / might want to change: 
 - Zip code via ```ENV``` parameter in Dockerfile or at runtime (```-e "PLZ=<YOUR_ZIP_CODE_HERE>"```). This will affect price calculation. Each municipality has different pricing.
