@@ -33,7 +33,13 @@ The container is based on [Selenium-Firefox](https://github.com/SeleniumHQ/docke
 Why that way? Because if your tool is a hammer, every problem looks like a nail. Tool = Selenium Container. 
 
 # Run it
-## Set container for scraping and serving result
+## Create Container for Scraping and Serving the Chart
+
+## Container Customization at Startup
+The container needs to be customized for your location. You will have / might want to change: 
+- Zip code via ```ENV``` parameter in Dockerfile or at runtime (```-e "PLZ=<your zip code>"```). This will affect price calculation. Each municipality has different pricing.
+- Zip Code may also be specified in ```config.yml```. Default is via ```env```.
+- Timezone via ```ENV``` parameter (```-e "TZ=Europe/Berlin"```) at container startup. (This is inherited from Selenium's container.)
 
 ## Set up ePaper Display a.k.a. The Timeframe
 - Stavros' instructions are based on a Linux system. This will most probably lead to issues when trying to build the firmware on Windows. I ran into a nasty error during compilation:
@@ -63,15 +69,10 @@ Drawbacks of alternative solution:
 - Requires detailed data on pricing components for each municipality. 
 - Requires in-depth data on pricing calculation for each provider. 
 
-# Customization 
-The container is customized for my location. You will have / might want to change: 
-- Zip code via ```ENV``` parameter in Dockerfile or at runtime (```-e "PLZ=<your zip code>"```). This will affect price calculation. Each municipality has different pricing.
-- Zip Code may also be specified in ```config.yml```. Default is via ```env```.
-- Timezone via ```ENV``` parameter (```-e "TZ=Europe/Berlin"```) at container startup. (This is inherited from Selenium's container.)
 
 # Issues
 - Web Scraping the Chart needs a Browser (Selenium). So the server side component has to be run on a (relatively) beefy machine (so many dependencies). Can't additionally load my little Rapberry with this.
-- (no:) Maybe using BeautifulSoup to extract the Tibber SVG chart and render it with something like Imagemagick? But there's the issue of having an interactive website (Zip Code...). So: no...
+- Chart rendering isn't quite as good as intended. The tool tip indicating the current price is too small. 
 
 # Technical Deep-Dive
 ## Steps to scrape the chart using Selenium:
