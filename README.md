@@ -25,7 +25,7 @@ There's a limited number of providers offering dynamic electricity pricing in Ge
 This will be based on https://www.stavros.io/posts/making-the-timeframe/.
 The resulting picture for display (having completed steps given below):
 ![Image for ePaper Display](image.png "Tibber Price Chart prepared for ePaper Display, Firefox Capture").
-For the chart to be properly displayed the picture is in landscape mode. So the original case made by Stavros will not fit. 
+The picture is in landscape mode because of the chart. So the original case made by Stavros will not fit. 
 
 I've created a container automating the scraping and serving the image of the Tibber price chart for the Timeframe to fetch.
 The container is based on [Selenium-Firefox](https://github.com/SeleniumHQ/docker-selenium) and has additional modifications to automate scraping and serving the result. The web server runs on port 8999 (https) using on-the-fly generated keys. 
