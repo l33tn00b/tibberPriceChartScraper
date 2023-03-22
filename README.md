@@ -81,8 +81,12 @@ For more configuration options (e.g. different country), see the config.yaml sec
     - you set the udev rules: https://docs.platformio.org/en/latest/core/installation/udev-rules.html
     - you attach both USB devices to the VM (QinHeng Electronics USB Single Serial and Unknown Device 27C6 55A4)
 - You'll either have to
-  - modify Stavros' source to work with the chosen port number 8999 or
-  - map the container's port number 8999 to the host port 443 to run the unmodified source.
+  - modify Stavros' source to work with the chosen port number 8999 (to be documented)
+  or
+  - map the container's port number 8999 to the host port 443 to run the unmodified source:
+    ```
+    docker run -d -e "PLZ=<YOUR_ZIP_CODE_HERE> -e "TZ=Europe/Berlin" -p 443:8999 --name ttf_server --shm-size="2g" tibber-timeframe
+    ```
     
 
 # Alternatives 
