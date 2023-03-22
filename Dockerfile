@@ -12,6 +12,7 @@ ENV TZ=Europe/Berlin
 # add scraper script
 USER seluser
 ADD --chown=seluser:seluser scripts /home/seluser/scripts
+RUN chmod a+x /home/seluser/scripts/run_scrape.sh 
 
 # install python and useful tools
 # as well as the conf file for 
@@ -21,6 +22,10 @@ ADD --chown=seluser:seluser scripts /home/seluser/scripts
 USER root
 ADD conf_scripts /etc/supervisor/conf.d
 ADD startup_scripts /opt/bin
+# make sure scripts are executable
+RUN chmod a+x /opt/bin/cronrestart.sh
+RUN chmod a+x /opt/bin/gen-keys.sh
+RUN chmod a+x /opt/bin/start-scraper.sh
 # install python
 RUN apt-get update && apt-get install python3-distutils -y
 # now, this is contentious.
