@@ -1,0 +1,10 @@
+server {
+    listen 8999;
+
+    root /var/www;
+    index index.html index.htm;
+
+    ssl on;
+    ssl_certificate /etc/ssl/private/nginx-certificate.crt;
+    ssl_certificate_key /etc/ssl/private/nginx-private-key.key;
+}
