@@ -150,11 +150,11 @@ This will -of course- be badly broken if Tibber decide to change their website (
   
   Run it detached:
   ```
-  docker run -d -e "TZ=Europe/Berlin" -p 8999:8999 --name busy_shockley --shm-size="2g" selenium-firefox-test
+  docker run -d -e "PLZ=<YOUR_ZIP_CODE_HERE>" -e "TZ=Europe/Berlin" -p 8999:8999 --name busy_shockley --shm-size="2g" selenium-firefox-test
   ```
   Need to have VNC ? Password is "secret".
   ```
-  docker run -d -e "TZ=Europe/Berlin" -p 7900:7900 -p 8999:8999 --name busy_shockley --shm-size="2g" selenium-firefox-test 
+  docker run -d -e "PLZ=<YOUR_ZIP_CODE_HERE>" -e "TZ=Europe/Berlin" -p 7900:7900 -p 8999:8999 --name busy_shockley --shm-size="2g" selenium-firefox-test 
   ```
   
   
@@ -166,13 +166,13 @@ This will -of course- be badly broken if Tibber decide to change their website (
   Need to download files? 
   Mount a host directory into the container. Need to fix permissions first (see https://github.com/SeleniumHQ/docker-selenium last section)
   ```
-  cd /home/<username>/tibberPriceChartScraper
+  cd /home/<YOUR_USERNAME_HERE>/<YOUR_SUBDIR_HERE>
   mkdir download
   chown 1200:1201 download
   ```
   Start the container, mounting the newly created directory:
   ```
-  docker run -d -e "TZ=Europe/Berlin" -p 7900:7900 -p 8999:8999 --shm-size="2g" --name busy_shockley -v /home/<username>/dockerSeleniumPython/download:/home/seluser/files selenium-firefox-test
+  docker run -d -e "PLZ=<YOUR_ZIP_CODE_HERE> -e "TZ=Europe/Berlin" -p 7900:7900 -p 8999:8999 --shm-size="2g" --name busy_shockley -v /home/<YOUR_USERNAME_HERE>/<YOUR_SUBDIR_HERE>/download:/home/seluser/files selenium-firefox-test
   ```
  
 ## Scraping: 
