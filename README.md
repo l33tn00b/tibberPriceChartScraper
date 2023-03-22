@@ -44,7 +44,7 @@ Steps given below are for a standard (i.e. german, serving image on port 8999) c
   docker run -d -e "PLZ=<YOUR_ZIP_CODE_HERE> -e "TZ=Europe/Berlin" -p 8999:8999 --name ttf_server --shm-size="2g" tibber-timeframe
   ```
 - Check:
-  Point your browser to the server's IP at port 8999 aksing for ```image.png```:
+  Point your browser to the server's IP at port 8999 asking for ```image.png```:
   ```
   https://<SERVER_IP>:8999/image.png
   ```
