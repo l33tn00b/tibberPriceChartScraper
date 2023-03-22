@@ -83,7 +83,7 @@ For more configuration options (e.g. different country), see the config.yaml sec
 - You'll either have to
   - modify Stavros' source to work with the chosen port number 8999 (to be documented)
   or
-  - map the container's port number 8999 to the host port 443 to run the unmodified source:
+  - map the container's port number 8999 to host port 443 for running the unmodified source:
     ```
     docker run -d -e "PLZ=<YOUR_ZIP_CODE_HERE> -e "TZ=Europe/Berlin" -p 443:8999 --name ttf_server --shm-size="2g" tibber-timeframe
     ```
