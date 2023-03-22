@@ -88,6 +88,8 @@ For more configuration options (e.g. different country), see the config.yaml sec
     docker run -d -e "PLZ=<YOUR_ZIP_CODE_HERE> -e "TZ=Europe/Berlin" -p 443:8999 --name ttf_server --shm-size="2g" tibber-timeframe
     ```
     
+## HELP!
+- If you run into issues building the container image: Check your disk space. Is there any left? There's plenty of strange errors when running low.
 
 # Alternatives 
 Get raw pricing data from the European Transparency Platform, calculate pricing according to a particular provider. Render a nice chart ourselves. 
