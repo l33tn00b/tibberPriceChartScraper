@@ -258,11 +258,25 @@ The function then opens a file with the name ```bin_filename``` + ".sha" in bina
 Finally, the function returns the content hash as a string.
 
 ## bincode_image
-his is a Python function that encodes a PIL Image into a binary format suitable for display on an ePaper device. The encoded image is also written to a file specified by the outfile argument.
+This Python function takes a PIL Image object (im) and encodes it into a binary format suitable for display on an ePaper screen. The resulting binary data is written to a file specified by the outfile parameter. Additionally, a hash of the binary data is calculated using the calc_bin_image_hash() function, and optionally, the binary data is copied to a web directory if the copy_to_www_dir configuration option is set to True.
 
-The function takes two arguments: im, which is a PIL Image object representing the image to be encoded, and outfile, which is a string specifying the file name for the encoded image.
+The function works by iterating over each row (y) of the input image and processing each pixel in that row. For each pixel, the function extracts the color value and converts it into a binary value between 0 and 255. The binary value is then packed into a byte and appended to a list of binary data for the entire image.
 
-The encoding process works by iterating through each pixel in the image row by row. For each pixel, the function extracts the RGB color values and uses bitwise operations to combine them into a single byte value. This byte is added to a list called contents. Once the function has processed all the pixels in a row, it writes the contents list to the output file in binary format.
+The code uses a simple run-length encoding scheme to compress the binary data by combining pairs of consecutive bytes. Specifically, for each row, the function combines the binary values of every two pixels by shifting the first value 4 bits to the left and then combining it with the 4 most significant bits of the second value. The combined value is then packed into a single byte and added to the output data list. If a row has an odd number of pixels, the final binary value is combined with 0xF0 (which has the effect of padding the binary value with zeros) and added to the output list.
 
-After the encoding process is complete, the function calls ```calc_bin_image_hash``` to calculate a hash of the encoded image file. This hash is not used in the encoding process, but will be used for update checking purposes (i.e. is there a new image to be displayed?) later.
+The resulting binary data is written to the specified file using the with statement, which ensures that the file is properly closed after writing. The hash of the binary data is then calculated using the calc_bin_image_hash() function, which is not shown in this code snippet. Finally, if the copy_to_www_dir configuration option is set to True, the resulting binary file is also copied to a web directory using the copy_to_wwwdir() function, which is also not shown in this code snippet.
+
+## create_error_image
+The purpose of the given code is to create an error image that contains a short text message (given as the function argument "errmsg") to be displayed on a Lilygo T5 4.7" ePaper. The image is created using the Python Imaging Library (PIL) and a white background is created. The current time is printed on the image using the "datetime" module and the error message is also printed on the image using PIL's "ImageDraw" module.
+
+The resulting image is saved in PNG format and is written to the local directory so that it can be easily read using a normal web browser. Additionally, if the configuration file indicates that the resulting image should be copied to the www server directory, the image is also copied to that directory.
+
+Finally, the function returns the PIL image object that was created.
+
+## prep_image
+This code defines a function named prep_image that takes a file name (infilename) as input and prepares an image in the file for conversion to a binary format suitable for e-paper displays. The function returns a black and white image in PIL format.
+
+The code first opens the image in the file using the Image module from the Python Imaging Library (PIL). It then crops the image to remove everything except the chart and text above it. The image is then inverted, and the black background is replaced with white. Some areas with dark text are also replaced with black.
+
+The image is then resized to a specific size using Lanczos resampling, and the current date and time is added as text to the top of the image. The resulting image is then saved to disk and returned.
 
