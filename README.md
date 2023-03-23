@@ -184,11 +184,13 @@ This will -of course- be badly broken if Tibber decide to change their website (
  
 ## Scraping: 
 Selenium's containers run supervisord coordinating programs/services inside the container.
-Selenium's supervisor configuration is given in ```/etc/supervisor/conf.d/selenium.conf```. We'll just add another ```.conf```file handling 
+Selenium's supervisor configuration is given in ```/etc/supervisor/conf.d/selenium.conf```. We'll just add more ```.conf```files handling 
 - Web Server Startup (nginx),
 - Cron Startup,
 - Initial scrape after container startup (further scrapes will be initiated by a cronjob starting the scrape script).
   
+Each ```.conf``` file has a matching shell script performing the steps required.
+
 ## Caveats
 - Container Differences
   - Using Selenium-Chrome will drop you into a root shell in the container
@@ -207,7 +209,7 @@ Do also make sure, you're running the scraping script from the user home directo
 - Cron:
   - cron needs to be (re-)started at container init (because there is no init system)
   - per-user crontabs are dicey. Use system-wide /etc/crontab instead.
-  - Supervisor (I think) runs as non-root user in the Firefox container. So we cannot run conf-scripts demanding switching to user=root. Working around that by using sudo in the shell script.
+  - Supervisord runs as non-root user in the Firefox container. So we cannot run conf-scripts demanding switching to user=root. Working around that by using sudo in the shell script.
   
 - Encryption:
  Https keys generation: I'd have loved to properly do this on the fly at container startup. But generating keys takes quite a long time. So we either use shorter keys (or copy pre-made ones into the container).
