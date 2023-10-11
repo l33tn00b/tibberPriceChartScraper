@@ -35,6 +35,7 @@ Why that way? Because if your tool is a hammer, every problem looks like a nail.
 
 # Run it
 ## Create Container for Scraping and Serving the Chart
+Running cronjobs in containers: https://stackoverflow.com/questions/37458287/how-to-run-a-cron-job-inside-a-docker-container
 Steps given below are for a standard (i.e. german, serving image on port 8999) config:
 - Build Container image:
   ```
